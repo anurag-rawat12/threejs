@@ -1,101 +1,138 @@
-import Image from "next/image";
+'use client';
+import { useEffect } from 'react';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import fragmentShader from '../shaders/fragmentShader.glsl';
+import vertexShader from '../shaders/vertexShader.glsl';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  if (window === undefined) {
+    return <div>loading</div>
+  }
+
+
+  useEffect(() => {
+
+    // let x: any;
+    // let y: any;
+    // window.addEventListener('mousemove', (event) => {
+    //   x = event.x;
+    //   y = event.y;
+    //   console.log(x, y);
+    //   console.log(material.uniforms);
+    // });
+
+    const scene = new THREE.Scene();
+    const geomety = new THREE.SphereGeometry(1);
+    const material = new THREE.MeshBasicMaterial({ color: 0xff0000  , wireframe: true });
+    // const material = new THREE.ShaderMaterial({
+    //   vertexShader: vertexShader,
+    //   fragmentShader: fragmentShader,
+    // });
+    scene.background = new THREE.Color(0x808080);
+
+
+    // interface UTime {
+    //   value: () => number;
+    // }
+
+    // const u_time: UTime = {
+    //   value: () => {
+    //     return Math.random();
+    //   }
+    // };
+
+
+    // material.uniforms = {
+    //   u_time: { value: 1.0 },
+    //   u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+    //   u_mouse: { value: new THREE.Vector2() },
+    // };
+
+    const Mesh = new THREE.Mesh(
+      geomety,
+      material
+    );
+
+    scene.add(Mesh);
+    // cubeMesh.position.y = 2;
+
+    // const cubeMesh2 = new THREE.Mesh(
+    //   cubeGeometry,
+    //   cubeMaterial
+    // );
+    // cubeMesh2.position.x = 2;
+
+    // const cubeMesh3 = new THREE.Mesh(
+    //   cubeGeometry,
+    //   cubeMaterial
+    // );
+    // cubeMesh3.position.x = -2;
+
+    // const group = new THREE.Group();
+    // group.add(cubeMesh);
+    // group.add(cubeMesh2);
+    // group.add(cubeMesh3);
+
+    // const axishelper = new THREE.AxesHelper(5);
+
+    // scene.add(axishelper);
+    // scene.add(group);
+
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 30);
+    camera.position.z = 5;
+    scene.add(camera);
+
+    const canvas = document.getElementById('canvas');
+    if (canvas) {
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas as HTMLCanvasElement,
+        antialias: true,
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+
+      const controls = new OrbitControls(camera, canvas);
+      controls.enableDamping = true;
+      // controls.autoRotate = true;
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+      let prevtime = 0;
+      const clock = new THREE.Clock();
+
+
+      const animate = () => {
+
+        // const currenttime = clock.getElapsedTime();
+        // const delta = currenttime - prevtime;
+        // prevtime = currenttime;
+        // Mesh.rotation.y += THREE.MathUtils.degToRad(1) * delta * 20;
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // material.uniforms.u_time.value = u_time.value();
+        // console.log(material.uniforms);
+        // material.uniforms.u_mouse.value.set(x / window.innerWidth, y / window.innerHeight);
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+        controls.update();
+
+      }
+      animate();
+      renderer.render(scene, camera);
+    }
+
+
+  }, []);
+
+  return (
+    <div>
+      <canvas id="canvas"></canvas>
     </div>
   );
 }
